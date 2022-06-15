@@ -1,0 +1,175 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+# NftTokenCrowdsale (v1)
+  - kind: ethereum
+    name: NftTokenCrowdsale-v1
+    network: matic
+    source:
+      address: "0x0fB872BA6a28d5195bbAAC2d4649713A7bc5c450"
+      abi: NftTokenCrowdsale
+      startBlock: 20223539  
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - BlacklistAdded
+        - TokenPaused
+        - TokenPurchased
+        - TokenTypeAdded
+      abis:
+        - name: NftTokenCrowdsale
+          file: ./abis/NftTokenCrowdsale.json
+      eventHandlers:
+        - event: BlacklistAdded(address,address)
+          handler: handleBlacklistAdded
+        - event: TokenPaused(indexed uint256,address)
+          handler: handleTokenPaused
+        - event: TokenPurchased(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleTokenPurchased
+        - event: TokenTypeAdded(address,uint256)
+          handler: handleTokenTypeAdded
+      file: ./src/mapping.ts
+
+# NftTokenCrowdsale (v2)
+  - kind: ethereum
+    name: NftTokenCrowdsale-v2
+    network: matic
+    source:
+      address: "0x656fb7446ad100C0DC7a2d0f65b56069F499bff8"
+      abi: NftTokenCrowdsale
+      startBlock: 25063961
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenPaused
+        - TokenPurchased
+        - TokenTypeAdded
+      abis:
+        - name: NftTokenCrowdsale
+          file: ./abis/NftTokenCrowdsale.json
+      eventHandlers:
+        - event: TokenPaused(indexed uint256,address)
+          handler: handleTokenPaused
+        - event: TokenPurchased(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleTokenPurchased
+        - event: TokenTypeAdded(address,uint256)
+          handler: handleTokenTypeAdded
+      file: ./src/mapping.ts
+
+# NftTokenSwap (v1)
+  - kind: ethereum
+    name: NftTokenSwap-v1
+    network: matic
+    source:
+      address: "0x00258f054bD2f559d38Abe63b975a5F87A617F8d"
+      abi: NftTokenSwap
+      startBlock: 25063973
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenSwapped
+        - TokenPurchased
+      abis:
+        - name: NftTokenSwap
+          file: ./abis/NftTokenSwap.json
+      eventHandlers:
+        - event: TokenSwapped(indexed address,indexed uint256,indexed uint256,uint256,uint256)
+          handler: handleTokenSwapped
+        - event: TokenPurchased(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleTokenPurchased
+      file: ./src/mapping.ts
+
+# NftToken (v1)
+  - kind: ethereum
+    name: NftToken-v1
+    network: matic
+    source:
+      address: "0x07AE3987C679c0aFd2eC1ED2945278c37918816c"
+      abi: NftToken
+      startBlock: 20223288
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenEntity
+      abis:
+        - name: NftToken
+          file: ./abis/NftToken.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+
+# NftTokenToyo (v1)
+  - kind: ethereum
+    name: NftTokenToyo-v1
+    network: matic
+    source:
+      address: "0xaf5107e0a3Ea679B6Fc23A9756075559e2e4649b"
+      abi: NftTokenToyo
+      startBlock: 25063686
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenEntity
+      abis:
+        - name: NftTokenToyo
+          file: ./abis/NftTokenToyo.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+
+# NftTokenBox (v1)
+  - kind: ethereum
+    name: NftTokenBox-v1
+    network: matic
+    source:
+      address: "0x5c29302b5ae9e99f866704e28528d5be9b7b6a40"
+      abi: NftTokenBox
+      startBlock: 25063755
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenEntity
+      abis:
+        - name: NftTokenBox
+          file: ./abis/NftTokenBox.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+
+# NftTokenAirdrop (v1)
+  - kind: ethereum
+    name: NftTokenAirdrop-v1
+    network: matic
+    source:
+      address: "0xF7DeDa9D83224789D3f905DD95425670c0a5D63d"
+      abi: NftTokenAirdrop
+      startBlock: 25063952
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenEntity
+      abis:
+        - name: NftTokenAirdrop
+          file: ./abis/NftTokenAirdrop.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
