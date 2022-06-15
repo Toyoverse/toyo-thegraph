@@ -43,3 +43,7 @@ https://api.thegraph.com/subgraphs/name/toyo-subgraph/toyo
 ### Subscriptions (WS)
 
 wss://api.thegraph.com/subgraphs/name/toyo-subgraph/toyo
+
+### Playground
+
+https://thegraph.com/hosted-service/subgraph/toyo-subgraph/toyo
