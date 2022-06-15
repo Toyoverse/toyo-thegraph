@@ -33,3 +33,13 @@ Make sure to visit the documentation on https://thegraph.com/docs/ for further i
 `npm run deploy-local`
 
 https://docs.harmony.one/home/developers/tutorials/the-graph-subgraphs/building-and-deploying-subgraph-local-node
+
+## Subgraph endpoints
+
+### Queries (HTTP)
+
+https://api.thegraph.com/subgraphs/name/toyo-subgraph/toyo
+
+### Subscriptions (WS)
+
+wss://api.thegraph.com/subgraphs/name/toyo-subgraph/toyo
