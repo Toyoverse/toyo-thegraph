@@ -1,0 +1,60 @@
+type TokenPausedEntity @entity {
+  id: ID!
+  typeId: BigInt!
+  changer: Bytes! # address
+}
+
+type TokenPurchasedEntity @entity {
+  id: ID!
+  beneficiary: Bytes! # address
+  spender: Bytes! # address
+  tokenId: BigInt!
+  totalSupply: BigInt!
+  typeId: BigInt!
+  value: BigInt!
+  blockNumber: BigInt
+  blockTimestamp: BigInt
+  transactionHash: Bytes
+}
+
+type TokenTypeEntity @entity {
+  id: ID!
+  changer: Bytes! # address
+  newValue: BigInt!
+  count: BigInt!
+}
+
+type TokenSwappedEntity @entity {
+  id: ID!
+  sender: Bytes! # address
+  fromTypeId: BigInt!
+  toTypeId: BigInt!
+  fromTokenId: BigInt!
+  toTokenId: BigInt!
+  blockNumber: BigInt
+  blockTimestamp: BigInt
+  transactionHash: Bytes
+}
+
+type TokenTransferEntity @entity {
+  id: ID!
+  from: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt!
+  blockNumber: BigInt
+  blockTimestamp: BigInt
+  transactionHash: Bytes
+}
+
+type TokenOwnerEntity @entity {
+  id: ID!
+  tokenId: BigInt!
+  typeId: BigInt!
+  currentOwner: Bytes! # address
+  blockNumber: BigInt
+  blockTimestamp: BigInt
+  transactionHash: Bytes
+  oldOwner: Bytes!
+  newColumn: BigInt
+  metadata: String
+}
