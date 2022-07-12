@@ -36,11 +36,12 @@ export function handleTokenPaused(event: TokenPaused): void {
 
 export function handleTokenPurchased(event: TokenPurchased): void {
   let tokenId = event.params.tokenId;
+  let entityId = event.transaction.hash.toHex() + tokenId.toString();
 
   /* Purchase */
-  let purchased = TokenPurchasedEntity.load(event.transaction.hash.toHex())
+  let purchased = TokenPurchasedEntity.load(entityId)
   if (purchased == null) {
-    purchased = new TokenPurchasedEntity(event.transaction.hash.toHex())
+    purchased = new TokenPurchasedEntity(entityId)
   }
   purchased.beneficiary = event.params.beneficiary
   purchased.spender = event.params.spender
@@ -73,21 +74,6 @@ export function handleTokenPurchased(event: TokenPurchased): void {
   owner.blockTimestamp = event.block.timestamp
   owner.transactionHash = event.transaction.hash
   owner.save()
-
-  /* Metadata */
-
-  // const NFTTOKEN_ADDRESS = Address.fromString("0xaf5107e0a3Ea679B6Fc23A9756075559e2e4649b");
-
-  // let contract = NftToken.bind(NFTTOKEN_ADDRESS)
-  // let metadata = contract.tokenURI(tokenId)
-
-  // let parsed = json.fromString(metadata)
-  // if(parsed.kind == JSONValueKind.OBJECT){
-  //  let entry = parsed.toObject()
-  //  owner.tokenName = entry.name
-  //}
-
-  // owner.metadata = metadata;
 }
 
 export function handleTokenTypeAdded(event: TokenTypeAdded): void {
@@ -102,9 +88,12 @@ export function handleTokenTypeAdded(event: TokenTypeAdded): void {
 }
 
 export function handleTokenSwapped(event: TokenSwapped): void {
-  let entity = TokenSwappedEntity.load(event.transaction.hash.toHex())
+  let tokenId = event.params.toTokenId;
+  let entityId = event.transaction.hash.toHex() + tokenId.toString();
+
+  let entity = TokenSwappedEntity.load(entityId)
   if (entity == null) {
-    entity = new TokenSwappedEntity(event.transaction.hash.toHex())
+    entity = new TokenSwappedEntity(entityId)
   }
   entity.sender = event.params.sender
   entity.fromTypeId = event.params.fromTypeId

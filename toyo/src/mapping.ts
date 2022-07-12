@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, json, JSONValueKind, Address } from "@graphprotocol/graph-ts"
 
 import {
   TokenPaused,
@@ -11,6 +11,7 @@ import {
 } from "../generated/NftTokenSwap-v1/NftTokenSwap"
 
 import {
+  NftToken,
   Transfer
 } from "../generated/NftToken-v1/NftToken"
 
@@ -35,9 +36,12 @@ export function handleTokenPaused(event: TokenPaused): void {
 
 export function handleTokenPurchased(event: TokenPurchased): void {
   let tokenId = event.params.tokenId;
-  let purchased = TokenPurchasedEntity.load(event.transaction.hash.toHex())
+  let entityId = event.transaction.hash.toHex() + tokenId.toString();
+
+  /* Purchase */
+  let purchased = TokenPurchasedEntity.load(entityId)
   if (purchased == null) {
-    purchased = new TokenPurchasedEntity(event.transaction.hash.toHex())
+    purchased = new TokenPurchasedEntity(entityId)
   }
   purchased.beneficiary = event.params.beneficiary
   purchased.spender = event.params.spender
@@ -48,6 +52,7 @@ export function handleTokenPurchased(event: TokenPurchased): void {
   purchased.blockNumber = event.block.number
   purchased.blockTimestamp = event.block.timestamp
   purchased.transactionHash = event.transaction.hash
+  
   purchased.save()
 
   let type = TokenTypeEntity.load(event.params.typeId.toString())
@@ -61,6 +66,7 @@ export function handleTokenPurchased(event: TokenPurchased): void {
     owner = new TokenOwnerEntity(tokenId.toString())
   }
 
+  /* Owner */
   owner.currentOwner = event.params.beneficiary
   owner.tokenId = tokenId
   owner.typeId = event.params.typeId
@@ -82,9 +88,12 @@ export function handleTokenTypeAdded(event: TokenTypeAdded): void {
 }
 
 export function handleTokenSwapped(event: TokenSwapped): void {
-  let entity = TokenSwappedEntity.load(event.transaction.hash.toHex())
+  let tokenId = event.params.toTokenId;
+  let entityId = event.transaction.hash.toHex() + tokenId.toString();
+
+  let entity = TokenSwappedEntity.load(entityId)
   if (entity == null) {
-    entity = new TokenSwappedEntity(event.transaction.hash.toHex())
+    entity = new TokenSwappedEntity(entityId)
   }
   entity.sender = event.params.sender
   entity.fromTypeId = event.params.fromTypeId
