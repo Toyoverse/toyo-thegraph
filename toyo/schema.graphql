@@ -55,5 +55,11 @@ type TokenOwnerEntity @entity {
   blockTimestamp: BigInt
   transactionHash: Bytes
   oldOwner: Bytes!
-  newColumn: BigInt
+}
+
+type TokenWalletEntity @entity {
+  id: ID!
+  currentOwner: Bytes! # address
+  typeId: BigInt!
+  count: BigInt!
 }

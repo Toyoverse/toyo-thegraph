@@ -119,7 +119,34 @@ dataSources:
           handler: handleTokenPurchased
       file: ./src/mapping.ts
 
-# NftToken (v1)
+# NftTokenSwap (v3)
+  - kind: ethereum
+    name: NftTokenSwap-v3
+    network: matic
+    source:
+      address: "0xB86743535e2716E2cea0D285A3fc3c1A58e44318"
+      abi: NftTokenSwap
+      startBlock: 32243393
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenSwapped
+        - TokenPurchased
+      abis:
+        - name: NftTokenSwap
+          file: ./abis/NftTokenSwap.json
+        - name: NftToken
+          file: ./abis/NftToken.json
+      eventHandlers:
+        - event: TokenSwapped(indexed address,indexed uint256,indexed uint256,uint256,uint256)
+          handler: handleTokenSwapped
+        - event: TokenPurchased(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleTokenPurchased
+      file: ./src/mapping.ts
+
+# NftToken (v1) - from tokenId 1 to 9476
   - kind: ethereum
     name: NftToken-v1
     network: matic
@@ -163,7 +190,7 @@ dataSources:
           handler: handleTransfer
       file: ./src/mapping.ts
 
-# NftTokenBox (v1)
+# NftTokenBox (v1) - from tokenId 9477 to latest
   - kind: ethereum
     name: NftTokenBox-v1
     network: matic
