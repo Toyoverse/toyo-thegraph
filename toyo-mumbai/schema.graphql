@@ -73,3 +73,10 @@ type TokenClaimedEntity @entity {
   bondAmount: BigInt!
   cardCode: String!
 }
+
+type TokenWalletEntity @entity {
+  id: ID!
+  currentOwner: Bytes! # address
+  typeId: BigInt!
+  count: BigInt!
+}

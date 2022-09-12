@@ -24,6 +24,8 @@ Make sure to visit the documentation on https://thegraph.com/docs/ for further i
 
 `npm run deploy`
 
+`npm run upgrade`
+
 ## On Self-Hosted Service
 
 `docker-compose up -d`

@@ -16,15 +16,17 @@ import { TokenSwapped } from "../generated/NftTokenSwap-v1/NftTokenSwap";
 
 import { NftToken, Transfer } from "../generated/NftToken-v1/NftToken";
 
-import { TokenStaked } from "../generated/NftTokenStake-v1/NftTokenStake";
-
-import { TokenClaimed } from "../generated/NftTokenStake-v2/NftTokenStake";
+import {
+  TokenStaked,
+  TokenClaimed,
+} from "../generated/NftTokenStake-v1/NftTokenStake";
 
 import {
   TokenPausedEntity,
   TokenPurchasedEntity,
   TokenTypeEntity,
   TokenOwnerEntity,
+  TokenWalletEntity,
   TokenSwappedEntity,
   TokenTransferEntity,
   TokenStakedEntity,
@@ -43,13 +45,13 @@ export function handleTokenPaused(event: TokenPaused): void {
 
 export function handleTokenPurchased(event: TokenPurchased): void {
   let tokenId = event.params.tokenId;
-  let entityId = event.transaction.hash.toHex() + tokenId.toString();
 
   /* Purchase */
-  let purchased = TokenPurchasedEntity.load(entityId);
+  let purchased = TokenPurchasedEntity.load(tokenId.toString());
   if (purchased == null) {
-    purchased = new TokenPurchasedEntity(entityId);
+    purchased = new TokenPurchasedEntity(tokenId.toString());
   }
+
   purchased.beneficiary = event.params.beneficiary;
   purchased.spender = event.params.spender;
   purchased.tokenId = tokenId;
@@ -83,6 +85,20 @@ export function handleTokenPurchased(event: TokenPurchased): void {
   owner.blockTimestamp = event.block.timestamp;
   owner.transactionHash = event.transaction.hash;
   owner.save();
+
+  /* Wallet */
+  let wallet = TokenWalletEntity.load(
+    event.params.beneficiary.toHexString() + event.params.typeId.toString()
+  );
+  if (wallet == null) {
+    wallet = new TokenWalletEntity(
+      event.params.beneficiary.toHexString() + event.params.typeId.toString()
+    );
+  }
+  wallet.currentOwner = event.params.beneficiary;
+  wallet.typeId = event.params.typeId;
+  wallet.count = wallet.count.plus(BigInt.fromI32(1));
+  wallet.save();
 }
 
 export function handleTokenTypeAdded(event: TokenTypeAdded): void {
@@ -145,6 +161,38 @@ export function handleTransfer(event: Transfer): void {
   owner.blockTimestamp = event.block.timestamp;
   owner.transactionHash = event.transaction.hash;
   owner.save();
+
+  /* Wallet */
+  let purchased = TokenPurchasedEntity.load(event.params.tokenId.toString());
+  if (purchased != null) {
+    let walletTo = TokenWalletEntity.load(
+      event.params.to.toHexString() + purchased.typeId.toString()
+    );
+    if (walletTo == null) {
+      walletTo = new TokenWalletEntity(
+        event.params.to.toHexString() + purchased.typeId.toString()
+      );
+      walletTo.currentOwner = event.params.to;
+      walletTo.typeId = purchased.typeId;
+    }
+
+    walletTo.count = walletTo.count.plus(BigInt.fromI32(1));
+    walletTo.save();
+
+    let walletFrom = TokenWalletEntity.load(
+      event.params.from.toHexString() + purchased.typeId.toString()
+    );
+    if (walletFrom == null) {
+      walletFrom = new TokenWalletEntity(
+        event.params.from.toHexString() + purchased.typeId.toString()
+      );
+      walletFrom.currentOwner = event.params.from;
+      walletFrom.typeId = purchased.typeId;
+    }
+
+    walletFrom.count = walletFrom.count.plus(BigInt.fromI32(1));
+    walletFrom.save();
+  }
 }
 
 export function handleTokenStaked(event: TokenStaked): void {
