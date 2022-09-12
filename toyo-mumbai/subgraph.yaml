@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: 22662678  
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - BlacklistAdded
@@ -46,7 +46,7 @@ dataSources:
       startBlock: 24969693  
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - BlacklistAdded
@@ -79,7 +79,7 @@ dataSources:
       startBlock: 24971200  
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - BlacklistAdded
@@ -112,7 +112,7 @@ dataSources:
       startBlock: 25039835  
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - BlacklistAdded
@@ -145,7 +145,7 @@ dataSources:
       startBlock: 22662726
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenSwapped
@@ -172,7 +172,7 @@ dataSources:
       startBlock: 25002340
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenSwapped
@@ -199,7 +199,7 @@ dataSources:
       startBlock: 25002704
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenSwapped
@@ -226,7 +226,7 @@ dataSources:
       startBlock: 25003479
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenSwapped
@@ -253,7 +253,7 @@ dataSources:
       startBlock: 25039844
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenSwapped
@@ -280,7 +280,7 @@ dataSources:
       startBlock: 27068107
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenSwapped
@@ -307,7 +307,7 @@ dataSources:
       startBlock: 22662658
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenEntity
@@ -329,7 +329,7 @@ dataSources:
       startBlock: 25039808
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenEntity
@@ -351,7 +351,7 @@ dataSources:
       startBlock: 25039817
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenEntity
@@ -373,7 +373,7 @@ dataSources:
       startBlock: 25039826
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TokenEntity
@@ -383,4 +383,28 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+      file: ./src/mapping.ts
+
+# NftTokenStake (v1)
+  - kind: ethereum
+    name: NftTokenStake-v1
+    network: mumbai
+    source:
+      address: "0x39a66bb85ec5f0ba8572b6e2452f78b6301843d1"
+      abi: NftTokenStake
+      startBlock: 27588365
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - TokenStakeEntity
+      abis:
+        - name: NftTokenStake
+          file: ./abis/NftTokenStake.json
+      eventHandlers:
+        - event: TokenStaked(indexed address,indexed uint256)
+          handler: handleTokenStaked
+        - event: TokenClaimed(indexed address,indexed string,indexed uint256,uint256,string)
+          handler: handleTokenClaimed
       file: ./src/mapping.ts

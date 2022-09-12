@@ -7,7 +7,8 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ toyo-subgraph/toyo-mumbai",
     "create-local": "graph create --node http://localhost:8020/ toyo-subgraph/toyo-mumbai",
     "remove-local": "graph remove --node http://localhost:8020/ toyo-subgraph/toyo-mumbai",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 toyo-subgraph/toyo-mumbai"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 toyo-subgraph/toyo-mumbai",
+    "upgrade": "npx graph codegen && npx graph build && npm run deploy"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.25.3",
