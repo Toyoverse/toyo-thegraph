@@ -190,7 +190,7 @@ export function handleTransfer(event: Transfer): void {
       walletFrom.typeId = purchased.typeId;
     }
 
-    walletFrom.count = walletFrom.count.plus(BigInt.fromI32(1));
+    walletFrom.count = walletFrom.count.minus(BigInt.fromI32(1));
     walletFrom.save();
   }
 }
