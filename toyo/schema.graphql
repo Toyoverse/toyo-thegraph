@@ -51,10 +51,27 @@ type TokenOwnerEntity @entity {
   tokenId: BigInt!
   typeId: BigInt!
   currentOwner: Bytes! # address
+  currentStaker: Bytes # address
+  currentOwnerOrStaker: Bytes! # address
+  isStaked: Boolean
   blockNumber: BigInt
   blockTimestamp: BigInt
   transactionHash: Bytes
-  oldOwner: Bytes!
+}
+
+type TokenStakedEntity @entity {
+  id: ID!
+  tokenId: BigInt!
+  currentOwner: Bytes!
+}
+
+type TokenClaimedEntity @entity {
+  id: ID!
+  claimId: String
+  tokenId: BigInt!
+  owner: Bytes!
+  bondAmount: BigInt!
+  cardCode: String!
 }
 
 type TokenWalletEntity @entity {

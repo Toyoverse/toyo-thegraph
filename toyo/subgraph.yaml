@@ -2,7 +2,7 @@ specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
-# NftTokenCrowdsale (v1)
+# NftTokenCrowdsale (v1) | Paused
   - kind: ethereum
     name: NftTokenCrowdsale-v1
     network: matic
@@ -92,7 +92,7 @@ dataSources:
           handler: handleTokenPurchased
       file: ./src/mapping.ts
 
-# NftTokenSwap (v2)
+# NftTokenSwap (v2) | Paused
   - kind: ethereum
     name: NftTokenSwap-v2
     network: matic
@@ -232,4 +232,28 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+      file: ./src/mapping.ts
+
+# NftTokenStake (v1)
+  - kind: ethereum
+    name: NftTokenStake-v1
+    network: matic
+    source:
+      address: "0xd44ad19885a9a20dbd3f7022409804d8636a8243"
+      abi: NftTokenStake
+      startBlock: 32991686
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenStakeEntity
+      abis:
+        - name: NftTokenStake
+          file: ./abis/NftTokenStake.json
+      eventHandlers:
+        - event: TokenStaked(indexed address,indexed uint256)
+          handler: handleTokenStaked
+        - event: TokenClaimed(indexed address,indexed string,indexed uint256,uint256,string)
+          handler: handleTokenClaimed
       file: ./src/mapping.ts
