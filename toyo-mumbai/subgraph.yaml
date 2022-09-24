@@ -102,7 +102,7 @@ dataSources:
           handler: handleTokenTypeAdded
       file: ./src/mapping.ts
 
-# NftTokenCrowdsale (v4)
+# NftTokenCrowdsale (v4) | https://mumbai.polygonscan.com/address/0xf150b30099655721c6463d7579B6FaC52857dA90#code
   - kind: ethereum
     name: NftTokenCrowdsale-v4
     network: mumbai
@@ -110,6 +110,39 @@ dataSources:
       address: "0xf150b30099655721c6463d7579B6FaC52857dA90"
       abi: NftTokenCrowdsale
       startBlock: 25039835  
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - BlacklistAdded
+        - TokenPaused
+        - TokenPurchased
+        - TokenTypeAdded
+      abis:
+        - name: NftTokenCrowdsale
+          file: ./abis/NftTokenCrowdsale.json
+        - name: NftToken
+          file: ./abis/NftToken.json
+      eventHandlers:
+        - event: BlacklistAdded(address,address)
+          handler: handleBlacklistAdded
+        - event: TokenPaused(indexed uint256,address)
+          handler: handleTokenPaused
+        - event: TokenPurchased(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleTokenPurchased
+        - event: TokenTypeAdded(address,uint256)
+          handler: handleTokenTypeAdded
+      file: ./src/mapping.ts
+
+# NftTokenCrowdsale (v5) | https://mumbai.polygonscan.com/address/0xeAC3AaC0467B16621D0e12C86541e3dd89D3f86d#code
+  - kind: ethereum
+    name: NftTokenCrowdsale-v5
+    network: mumbai
+    source:
+      address: "0xeAC3AaC0467B16621D0e12C86541e3dd89D3f86d"
+      abi: NftTokenCrowdsale
+      startBlock: 28245625  
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -270,7 +303,7 @@ dataSources:
           handler: handleTokenPurchased
       file: ./src/mapping.ts
 
-# NftTokenSwap (v6)
+# NftTokenSwap (v6) | https://mumbai.polygonscan.com/address/0x53904b4640474d2f79b822ad4e2c40597d886bd5
   - kind: ethereum
     name: NftTokenSwap-v6
     network: mumbai

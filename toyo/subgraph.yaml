@@ -35,7 +35,7 @@ dataSources:
           handler: handleTokenTypeAdded
       file: ./src/mapping.ts
 
-# NftTokenCrowdsale (v2)
+# NftTokenCrowdsale (v2) | https://polygonscan.com/address/0x656fb7446ad100C0DC7a2d0f65b56069F499bff8#code
   - kind: ethereum
     name: NftTokenCrowdsale-v2
     network: matic
@@ -43,6 +43,36 @@ dataSources:
       address: "0x656fb7446ad100C0DC7a2d0f65b56069F499bff8"
       abi: NftTokenCrowdsale
       startBlock: 25063961
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenPaused
+        - TokenPurchased
+        - TokenTypeAdded
+      abis:
+        - name: NftTokenCrowdsale
+          file: ./abis/NftTokenCrowdsale.json
+        - name: NftToken
+          file: ./abis/NftToken.json
+      eventHandlers:
+        - event: TokenPaused(indexed uint256,address)
+          handler: handleTokenPaused
+        - event: TokenPurchased(indexed address,indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleTokenPurchased
+        - event: TokenTypeAdded(address,uint256)
+          handler: handleTokenTypeAdded
+      file: ./src/mapping.ts
+
+# NftTokenCrowdsale (v3) | https://polygonscan.com/address/0x7851a8a7A95f743d2AA9f54e791DB432502f0cBe#code
+  - kind: ethereum
+    name: NftTokenCrowdsale-v3
+    network: matic
+    source:
+      address: "0x7851a8a7A95f743d2AA9f54e791DB432502f0cBe"
+      abi: NftTokenCrowdsale
+      startBlock: 33509986
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -92,7 +122,7 @@ dataSources:
           handler: handleTokenPurchased
       file: ./src/mapping.ts
 
-# NftTokenSwap (v2) | Paused
+# NftTokenSwap (v2) | Paused | https://polygonscan.com/address/0x00258f054bD2f559d38Abe63b975a5F87A617F8d#code
   - kind: ethereum
     name: NftTokenSwap-v2
     network: matic
@@ -119,7 +149,7 @@ dataSources:
           handler: handleTokenPurchased
       file: ./src/mapping.ts
 
-# NftTokenSwap (v3)
+# NftTokenSwap (v3) | https://polygonscan.com/address/0xB86743535e2716E2cea0D285A3fc3c1A58e44318#code
   - kind: ethereum
     name: NftTokenSwap-v3
     network: matic
@@ -168,7 +198,7 @@ dataSources:
           handler: handleTransfer
       file: ./src/mapping.ts
 
-# NftTokenToyo (v1)
+# NftTokenToyo (v1) | https://polygonscan.com/address/0xaf5107e0a3Ea679B6Fc23A9756075559e2e4649b#code
   - kind: ethereum
     name: NftTokenToyo-v1
     network: matic
@@ -190,7 +220,7 @@ dataSources:
           handler: handleTransfer
       file: ./src/mapping.ts
 
-# NftTokenBox (v1) - from tokenId 9477 to latest
+# NftTokenBox (v1) - from tokenId 9477 to latest | https://polygonscan.com/address/0x5c29302b5ae9e99f866704e28528d5be9b7b6a40#code
   - kind: ethereum
     name: NftTokenBox-v1
     network: matic
@@ -212,7 +242,7 @@ dataSources:
           handler: handleTransfer
       file: ./src/mapping.ts
 
-# NftTokenAirdrop (v1)
+# NftTokenAirdrop (v1) | https://polygonscan.com/address/0xF7DeDa9D83224789D3f905DD95425670c0a5D63d#code
   - kind: ethereum
     name: NftTokenAirdrop-v1
     network: matic
@@ -234,7 +264,7 @@ dataSources:
           handler: handleTransfer
       file: ./src/mapping.ts
 
-# NftTokenStake (v1)
+# NftTokenStake (v1) | https://polygonscan.com/address/0xd44ad19885a9a20dbd3f7022409804d8636a8243#code
   - kind: ethereum
     name: NftTokenStake-v1
     network: matic
